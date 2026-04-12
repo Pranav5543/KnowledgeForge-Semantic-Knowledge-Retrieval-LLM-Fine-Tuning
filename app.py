@@ -52,10 +52,22 @@ with gr.Blocks(theme=gr.themes.Soft(), title="Vexoo Labs - Document Retrieval") 
                 placeholder="Enter long text to ingest and structure into the knowledge pyramid..."
             )
             query_input = gr.Textbox(
-                label="Semantic Search Query", 
-                placeholder="e.g., What did the court say about contracts?"
+                label="Ask a Question about the Document", 
+                placeholder="Type your question here..."
             )
-            submit_btn = gr.Button("Run Semantic Retrieval", variant="primary")
+            
+            # Adding recommended questions that users can click
+            gr.Examples(
+                examples=[
+                    "What did the supreme court rule about contracts?",
+                    "What is the standard test sentence?",
+                    "How do we calculate the sum using a linear equation?"
+                ],
+                inputs=query_input,
+                label="💡 Suggested Questions (Click one to try)"
+            )
+            
+            submit_btn = gr.Button("🔍 Run Semantic Retrieval", variant="primary")
             
         with gr.Column():
             output_display = gr.Markdown("### Results will appear here...")
