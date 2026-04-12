@@ -1,0 +1,9 @@
+transformers
+sentencepiece
+peft
+trl
+datasets
+torch
+sentence-transformers
+numpy
+gradio
