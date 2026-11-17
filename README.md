@@ -1,13 +1,3 @@
----
-title: KnowledgeForge
-emoji: 🧠
-colorFrom: blue
-colorTo: indigo
-sdk: gradio
-app_file: app.py
-pinned: false
----
-
 # KnowledgeForge – Semantic Knowledge Retrieval & LLM Fine-Tuning
 
 KnowledgeForge is an AI-powered application that combines hierarchical document organization, semantic retrieval, and parameter-efficient LLM fine-tuning for mathematical reasoning.
