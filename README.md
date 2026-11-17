@@ -1,6 +1,6 @@
 ---
-title: Perfect Venture
-emoji: 🚀
+title: KnowledgeForge
+emoji: 🧠
 colorFrom: blue
 colorTo: indigo
 sdk: gradio
@@ -8,81 +8,166 @@ app_file: app.py
 pinned: false
 ---
 
-# Vexoo Labs AI Engineer Assignment
+# KnowledgeForge – Semantic Knowledge Retrieval & LLM Fine-Tuning
 
-This repository contains the complete implementation of the AI Engineer Assignment for Vexoo Labs. It includes a 4-Layer Knowledge Pyramid for document ingestion, a semantic retrieval system, a fine-tuned reasoning model via LoRA, and an interactive web interface.
+KnowledgeForge is an AI-powered application that combines hierarchical document organization, semantic retrieval, and parameter-efficient LLM fine-tuning for mathematical reasoning.
 
-> **🔗 Live Interactive Demo:** [Hugging Face Spaces Demo](https://huggingface.co/spaces/Pranav20035/perfectventure)
+It provides an interactive interface for processing text, retrieving relevant information, and exploring a fine-tuning pipeline using LoRA.
 
----
+## Key Features
 
-## 📂 Project Structure
+- **Document Ingestion:** Processes text and organizes content into manageable sections.
+- **Four-Layer Knowledge Pyramid:** Structures document information across four hierarchical layers.
+- **Semantic Retrieval:** Uses sentence embeddings and similarity search to retrieve relevant content.
+- **Text Chunking:** Implements chunking and sliding-window techniques for document processing.
+- **LLM Fine-Tuning:** Uses LoRA to fine-tune a pretrained language model.
+- **Mathematical Reasoning:** Uses the GSM8K dataset for model fine-tuning.
+- **Interactive Interface:** Provides a Gradio application for exploring document ingestion and retrieval.
 
-- `app.py`: A full Gradio web application providing a UI for the Knowledge Pyramid and Semantic Retrieval.
-- `document_pyramid.py`: The architecture and data structures defining the 4-layer Knowledge Pyramid.
-- `ingestion.py`: Implementation of the text chunking, sliding window, and document parsing mechanisms.
-- `retrieval.py`: The semantic similarity search module powered by `sentence-transformers`.
-- `train_gsm8k.py`: Fine-tuning pipeline using `trl` (version 1.0.0+) and `peft` (LoRA) against the GSM8K reasoning dataset.
-- `bonus_adapter.md`: The conceptual system design for the Reasoning-Aware Adapter.
-- `summary_report.md`: The 1-page summary of the technical choices and assignment breakdown.
-- `requirements.txt`: Comprehensive list of Python package dependencies.
+## Technology Stack
 
----
+| Component | Technology |
+|---|---|
+| Programming Language | Python |
+| Interface | Gradio |
+| Embeddings | Sentence Transformers |
+| Retrieval | Semantic Similarity Search |
+| Model Fine-Tuning | LoRA, PEFT |
+| Training Framework | TRL |
+| Dataset | GSM8K |
+| Base Model | Llama |
 
-## 🛠️ Setup & Installation
+## System Architecture
 
-The code has been strictly updated to ensure compatibility with modern library versions (e.g., `trl >= 1.0.0` requiring `SFTConfig`).
+KnowledgeForge consists of two main components.
 
-**1. Create a virtual environment (Optional but Recommended)**
+### 1. Document Knowledge and Retrieval
+
+The document processing pipeline follows these stages:
+
+1. **Ingestion:** Accepts text content for processing.
+2. **Chunking:** Splits documents into smaller sections using sliding-window techniques.
+3. **Knowledge Organization:** Structures information using a four-layer Knowledge Pyramid.
+4. **Embedding Generation:** Converts text into vector representations using Sentence Transformers.
+5. **Semantic Retrieval:** Finds relevant content based on semantic similarity.
+
+### 2. LLM Fine-Tuning
+
+The fine-tuning pipeline adapts a pretrained language model for mathematical reasoning.
+
+1. Loads a pretrained Llama model.
+2. Prepares the GSM8K mathematical reasoning dataset.
+3. Applies LoRA adapters using PEFT.
+4. Configures supervised fine-tuning using TRL.
+5. Trains the model and saves the resulting adapter.
+
+The document retrieval and model fine-tuning pipelines are maintained as separate components.
+
+## Project Structure
+
+```text
+KnowledgeForge/
+├── app.py
+├── document_pyramid.py
+├── ingestion.py
+├── retrieval.py
+├── train_gsm8k.py
+├── bonus_adapter.md
+├── requirements.txt
+└── README.md
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.10+
+- pip
+- Hugging Face account for accessing gated models, if required
+
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd KnowledgeForge
+```
+
+### 2. Create a Virtual Environment
+
 ```bash
 python -m venv venv
-# On Windows:
+```
+
+Activate it:
+
+**Windows**
+```bash
 venv\Scripts\activate
-# On Mac/Linux:
+```
+
+**Linux / macOS**
+```bash
 source venv/bin/activate
 ```
 
-**2. Install all required dependencies**
+### 3. Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
-> **Note for Windows Users:** The `requirements.txt` will normally install standard PyTorch. Depending on your system's CUDA setup, you may need to install the CUDA-specific version of `torch` directly from the [PyTorch website](https://pytorch.org/).
 
----
+### 4. Launch the Application
 
-## 🚀 Execution Guide
-
-### 1. Launch the Live Web App (Part 1 - Recommended)
-To experience the Document Ingestion and Retrieval system interactively, simply run the Gradio app:
 ```bash
 python app.py
 ```
-This will launch a local web server (usually at `http://127.0.0.1:7860`) where you can paste context and query the Knowledge Pyramid visually.
 
-### 2. Run Scripts Manually via CLI (Part 1)
-To view the raw CLI ingestion process:
+The Gradio application will be available locally, usually at:
+
+```text
+http://127.0.0.1:7860
+```
+
+## Running Individual Modules
+
+Run document ingestion:
+
 ```bash
 python ingestion.py
 ```
-To run the semantic retrieval search purely via terminal:
+
+Run semantic retrieval:
+
 ```bash
 python retrieval.py
 ```
 
-### 3. Fine-Tune the Reasoning Model (Part 2)
-The GSM8K fine-tuning script is pre-configured and fully debugged. It gracefully handles CPU-only environments (falling back from `bf16/gpu`) and implements the correct `SFTConfig` parameters.
+## Model Fine-Tuning
+
+The GSM8K fine-tuning pipeline uses LoRA to reduce the number of trainable parameters during model adaptation.
+
+Run the training script:
+
 ```bash
 python train_gsm8k.py
 ```
-*By default, this script uses `JackFram/llama-68m` to prevent out-of-memory errors on standard machines while demonstrating the mechanics.*
 
-**To train against a full model like `meta-llama/Llama-3.2-1B`:**
-1. Login via terminal: `huggingface-cli login`
-2. Change `MODEL_NAME` inside `train_gsm8k.py` to your desired model.
+The default configuration uses `JackFram/llama-68m` to keep resource requirements relatively low.
 
----
+To experiment with a larger model, update `MODEL_NAME` in `train_gsm8k.py` and ensure your hardware has sufficient memory.
 
-## 📜 Bonus and Technical Summary
+For gated models, authenticate with Hugging Face before running the training script.
 
-- **Summary Report:** See `summary_report.md` for the technical breakdown.
-- **Bonus Question:** See `bonus_adapter.md` for the architectural design of a Reasoning-Aware Adapter.
+The training configuration includes CPU-compatible fallbacks for environments where GPU-specific precision options such as BF16 are unavailable.
+
+## Architecture Exploration
+
+The repository also includes `bonus_adapter.md`, which documents a conceptual design for a Reasoning-Aware Adapter and its potential application to reasoning-oriented language models.
+
+## Future Improvements
+
+- Integrate the retrieval pipeline with a conversational LLM for complete RAG-based question answering.
+- Improve hierarchical retrieval across the four knowledge layers.
+- Evaluate retrieval quality using relevant information-retrieval metrics.
+- Compare base and fine-tuned model performance on mathematical reasoning benchmarks.
+- Explore integrating reasoning-aware adapters into the fine-tuning pipeline.
